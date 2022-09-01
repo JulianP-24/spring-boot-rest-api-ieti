@@ -44,13 +44,13 @@ public class UserController {
         if (users.size() > 0){
             id = String.valueOf((Integer.parseInt(users.get(users.size()-1).getId())+1));
         }
-        User newUser = userService.create(new User(new UserDto(userDto.getName(), userDto.getEmail(), userDto.getLastName()), id, new Date()));
+        User newUser = userService.create(new User(userDto, id, new Date()));
         return new ResponseEntity<UserDto>(userService.mapToDto(newUser), HttpStatus.CREATED);
     }
 
     @PutMapping( "/{id}" )
     public ResponseEntity<UserDto> update( @RequestBody UserDto user, @PathVariable String id ) {
-        User updateUser = new User(new UserDto(user.getName(), user.getEmail(), user.getLastName()), id, userService.findById(id).getCreatedAt());
+        User updateUser = new User(user, id, userService.findById(id).getCreatedAt());
         return new ResponseEntity<UserDto>(userService.mapToDto(userService.update(updateUser, id)), HttpStatus.CREATED);
     }
 
