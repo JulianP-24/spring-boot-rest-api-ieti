@@ -8,7 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -44,7 +46,7 @@ public class UserController {
         if (users.size() > 0){
             id = String.valueOf((Integer.parseInt(users.get(users.size()-1).getId())+1));
         }
-        User newUser = userService.create(new User(new UserDto(userDto.getName(), userDto.getEmail(), userDto.getLastName()), id, userDto.getCreatedAt()));
+        User newUser = userService.create(new User(new UserDto(userDto.getName(), userDto.getEmail(), userDto.getLastName()), id, new Date()));
         return new ResponseEntity<UserDto>(userService.mapToDto(newUser), HttpStatus.CREATED);
     }
 
